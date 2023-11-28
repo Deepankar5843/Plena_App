@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './screens/HomeScreen';
+import ProductDetailsScreen from './screens/ProductDetailsScreen';
+import { ProductProvider } from './ProductContext';
+import CartScreen from './screens/CartScreen';
+import BottomTabIcons from './Tab/BottomTabIcons';
 
-export default function App() {
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <ProductProvider>
+        <Tab.Navigator tabBar={(props) => <BottomTabIcons {...props} />}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+          <Stack.Screen name="CartScreen" component={CartScreen} />
+        </Tab.Navigator>
+      </ProductProvider>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
